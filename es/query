@@ -1,0 +1,28 @@
+POST test_comments/_doc
+{
+  "id": "UgyNPSeSnE20TQ3Nxzx4AaABAg",
+  "videoId": "ZOfPPHcAa7E",
+  "content": "This is the sequel to The Rocketeer that we will never get from Disney, it certainly comes closer to the pulp adventure genre than every other MCU flick. Joe Johnston always had a penchant for films with that old time adventure quality, under a better regime he would have been the go-director for Star Wars and Indiana Jones.",
+  "author_name": "Oscar Stainton",
+  "author_profile_image_url": "https://yt3.ggpht.com/ytc/AGIKgqMKtVXTRL4oamWmReegrtI1kp_gkvuleTgePkizMg=s48-c-k-c0x00ffffff-no-rj",
+  "like_count": 172,
+  "published_at": "2021-10-15T18:22:36Z",
+  "updated_at": "2021-10-15T18:22:36Z",
+  "sentiment": "positive"
+}
+
+GET test_comments/_doc/R1XdxocBDnTOrjNNZbxH
+
+GET test_comments/_search
+
+DELETE test_comments/_doc/R1XdxocBDnTOrjNNZbxH
+
+POST test_comments/_bulk
+{ "create": {}}
+{ "id": "UgyNPSeSnE20TQ3Nxzx4AaABAg", "videoId": "ZOfPPHcAa7E", "content": "This is the sequel to The Rocketeer that we will never get from Disney, it certainly comes closer to the pulp adventure genre than every other MCU flick. Joe Johnston always had a penchant for films with that old time adventure quality, under a better regime he would have been the go-director for Star Wars and Indiana Jones.", "author_name": "Oscar Stainton", "author_profile_image_url": "https://yt3.ggpht.com/ytc/AGIKgqMKtVXTRL4oamWmReegrtI1kp_gkvuleTgePkizMg=s48-c-k-c0x00ffffff-no-rj", "like_count": 172, "published_at": "2021-10-15T18:22:36Z", "updated_at": "2021-10-15T18:22:36Z", "sentiment": "positive" }
+{ "create": {}}
+{ "id": "UgyNPSeSnE20TQ3Nxzx4AaABAg", "videoId": "ZOfPPHcAa7E", "content": "This is the sequel to The Rocketeer that we will never get from Disney, it certainly comes closer to the pulp adventure genre than every other MCU flick. Joe Johnston always had a penchant for films with that old time adventure quality, under a better regime he would have been the go-director for Star Wars and Indiana Jones.", "author_name": "Oscar Stainton", "author_profile_image_url": "https://yt3.ggpht.com/ytc/AGIKgqMKtVXTRL4oamWmReegrtI1kp_gkvuleTgePkizMg=s48-c-k-c0x00ffffff-no-rj", "like_count": 172, "published_at": "2021-10-15T18:22:36Z", "updated_at": "2021-10-15T18:22:36Z", "sentiment": "positive" }
+{ "create": {}}
+{ "id": "UgyNPSeSnE20TQ3Nxzx4AaABAg", "videoId": "ZOfPPHcAa7E", "content": "This is the sequel to The Rocketeer that we will never get from Disney, it certainly comes closer to the pulp adventure genre than every other MCU flick. Joe Johnston always had a penchant for films with that old time adventure quality, under a better regime he would have been the go-director for Star Wars and Indiana Jones.", "author_name": "Oscar Stainton", "author_profile_image_url": "https://yt3.ggpht.com/ytc/AGIKgqMKtVXTRL4oamWmReegrtI1kp_gkvuleTgePkizMg=s48-c-k-c0x00ffffff-no-rj", "like_count": 172, "published_at": "2021-10-15T18:22:36Z", "updated_at": "2021-10-15T18:22:36Z", "sentiment": "positive" }
+{ "create": {}}
+{ "id": "UgyNPSeSnE20TQ3Nxzx4AaABAg", "videoId": "ZOfPPHcAa7E", "content": "This is the sequel to The Rocketeer that we will never get from Disney, it certainly comes closer to the pulp adventure genre than every other MCU flick. Joe Johnston always had a penchant for films with that old time adventure quality, under a better regime he would have been the go-director for Star Wars and Indiana Jones.", "author_name": "Oscar Stainton", "author_profile_image_url": "https://yt3.ggpht.com/ytc/AGIKgqMKtVXTRL4oamWmReegrtI1kp_gkvuleTgePkizMg=s48-c-k-c0x00ffffff-no-rj", "like_count": 172, "published_at": "2021-10-15T18:22:36Z", "updated_at": "2021-10-15T18:22:36Z", "sentiment": "positive" }
