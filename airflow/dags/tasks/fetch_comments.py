@@ -19,7 +19,7 @@ def fetch_comments():
         'videoId': 'ZOfPPHcAa7E',
         'part': 'id,snippet',
         'order': 'relevance',
-        'maxResults': 100,
+        'maxResults': 1,
     }
     response = requests.get(url, params).json()
     comments_json = response['items']

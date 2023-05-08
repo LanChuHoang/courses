@@ -1,7 +1,0 @@
-[2023-05-04T08:25:40.593+0000] {processor.py:153} INFO - Started process (PID=42) to work on /opt/airflow/dags/youtube.py
-[2023-05-04T08:25:40.593+0000] {processor.py:743} INFO - Processing file /opt/airflow/dags/youtube.py for tasks to queue
-[2023-05-04T08:25:40.594+0000] {logging_mixin.py:137} INFO - [2023-05-04T08:25:40.594+0000] {dagbag.py:532} INFO - Filling up the DagBag from /opt/airflow/dags/youtube.py
-[2023-05-04T08:25:41.133+0000] {processor.py:753} INFO - DAG(s) dict_keys(['youtube']) retrieved from /opt/airflow/dags/youtube.py
-[2023-05-04T08:25:41.159+0000] {logging_mixin.py:137} INFO - [2023-05-04T08:25:41.159+0000] {dag.py:2705} INFO - Sync 1 DAGs
-[2023-05-04T08:25:41.183+0000] {logging_mixin.py:137} INFO - [2023-05-04T08:25:41.183+0000] {dag.py:3456} INFO - Setting next_dagrun for youtube to None, run_after=None
-[2023-05-04T08:25:41.202+0000] {processor.py:175} INFO - Processing /opt/airflow/dags/youtube.py took 0.612 seconds
