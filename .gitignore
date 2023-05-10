@@ -1,3 +1,4 @@
 **/logs
 *.log
 *.joblib
+**/__pycache__
