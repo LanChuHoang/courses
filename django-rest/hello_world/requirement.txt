@@ -1,0 +1,20 @@
+asgiref @ file:///tmp/build/80754af9/asgiref_1625643473416/work
+attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1683424013410/work
+Django @ file:///tmp/build/80754af9/django_1625585912945/work
+djangorestframework @ file:///home/conda/feedstock_root/build_artifacts/djangorestframework_1663854154474/work
+djangorestframework-simplejwt==4.4.0
+drf-spectacular @ file:///home/conda/feedstock_root/build_artifacts/drf-spectacular_1681580528339/work
+importlib-metadata @ file:///home/conda/feedstock_root/build_artifacts/importlib-metadata_1682176699712/work
+importlib-resources @ file:///home/conda/feedstock_root/build_artifacts/importlib_resources_1676919000169/work
+inflection @ file:///home/conda/feedstock_root/build_artifacts/inflection_1598089801258/work
+jsonschema @ file:///home/conda/feedstock_root/build_artifacts/jsonschema-meta_1669810440410/work
+pkgutil_resolve_name @ file:///home/conda/feedstock_root/build_artifacts/pkgutil-resolve-name_1633981968097/work
+psycopg2 @ file:///work/ci_py311/psycopg2_1676845216091/work
+PyJWT @ file:///home/conda/feedstock_root/build_artifacts/pyjwt_1683676063469/work
+pyrsistent @ file:///work/ci_py311/pyrsistent_1676823088752/work
+pytz==2021.3
+PyYAML @ file:///work/ci_py311/pyyaml_1676827445582/work
+sqlparse @ file:///tmp/build/80754af9/sqlparse_1602184451250/work
+typing_extensions @ file:///opt/conda/conda-bld/typing_extensions_1647553014482/work
+uritemplate @ file:///home/conda/feedstock_root/build_artifacts/uritemplate_1634152692041/work
+zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1677313463193/work
