@@ -1,7 +1,10 @@
+import json
+
 import pendulum
-from airflow.decorators import dag
+from airflow.decorators import dag, task
 from tasks.clean_comments import clean_comments
 from tasks.extract_features import extract_features
+from tasks.fetch_clips import fetch_movies
 from tasks.fetch_comments import fetch_comments
 from tasks.store_comments import bulk_insert
 
