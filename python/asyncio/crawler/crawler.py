@@ -2,6 +2,7 @@ import asyncio
 import pathlib
 import re
 import sys
+import threading
 import time
 import urllib
 from pathlib import Path
@@ -52,8 +53,8 @@ async def bulk_craw_and_save(file_path: Path, urls: set):
     
     # for url in urls:
     #   await process_one(file_path, url, session)
-
-if __name__ == "__main__":
+    
+def main():
   assert sys.version_info >= (3,7), "Require Python 3.7+"
   here = pathlib.Path(__file__).parent
   input_file_path = here.joinpath("urls.txt")
@@ -66,4 +67,15 @@ if __name__ == "__main__":
   start = time.perf_counter()
   asyncio.run(bulk_craw_and_save(output_file_path, urls))
   elapsed = time.perf_counter() - start
-  print(f"Program completed in {elapsed:0.5f} seconds.")
+  print(f"Thread completed in {elapsed:0.5f} seconds.")
+
+if __name__ == '__main__':
+    thread1 = threading.Thread(target = main)
+    thread2 = threading.Thread(target = main)
+    start = time.perf_counter()
+    thread1.start()
+    thread2.start()
+    thread1.join()
+    thread2.join()
+    elapsed = time.perf_counter() - start
+    print(f"Program completed in {elapsed:0.5f} seconds.")
