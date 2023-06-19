@@ -2,3 +2,4 @@
 *.log
 *.joblib
 **/__pycache__
+**/node_modules/
