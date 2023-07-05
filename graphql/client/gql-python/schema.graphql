@@ -1,0 +1,989 @@
+type Query {
+  indexMarket(indexId: IndexMarketInput!): IndexMarketResponse
+  idxsMarket(indexIds: [IndexMarketInput!] = null): [IndexMarketResponse!]
+  recommendationBot(input: RecommendationBotInput!): [RecommendationResponse!]
+  recommendationOverview(input: RecommendationOverviewInput!): [RecommendationOverviewResponse!]!
+  recommendationStocks: [String!]!
+  derivativePerformance: DerivativePerformanceResponse
+  derivativeRecommendationPerformance(input: DerivativePerformanceInput = null): [DerivativeRecommendationPerformanceResponse!]!
+  stockMutation(type: StockMutationTypeInput! = LAST_5_SESSION, limit: Int! = -1, offset: Int! = 0, exchange: ExchangeFilterInput = All, symbols: [String!] = null): [StockMutationQueryResponse!]
+  stocksCompany(input: StocksCompanyInput = null): [StocksCompanyDataResponse!]!
+  marketStatus(distance: Int!): MarketStatusResponse
+  marketRecommendation: MarketRecommendationResponse
+  sectorsRating: SectorsRatingResponse
+  stocksRating: StocksRatingResponse
+  portfolioPerformance(input: PortfolioPerformanceInput!): PortfolioPerformanceResponse
+  portfolioEfficiency(input: PortfolioEfficiencyInput!): [PortfolioEfficiencyResponse!]!
+  portfolioAllocation(input: PortfolioAllocationInput!): PortfolioAllocationResponse
+  portfolioAllocationBalance(input: PortfolioAllocationBalanceInput!): [PortfolioAllocationBalanceResponse!]!
+  derivativesRecommendation(input: DerivativesRecommendationInput!): [DerivativesRecommendationResponse!]
+  derivativesRecommendationOverview(input: DerivativesRecommendationOverviewInput!): [DerivativesRecommendationOverviewResponse!]!
+  derivativeTicker(input: DerivativeTickerInput = null): [DerivativeTickerDataResponse!]!
+}
+
+type IndexMarketResponse {
+  indexRealtimeByIndexId: [String!]!
+  indexRealtimeLatest: IndexMarketLatestData!
+}
+
+type IndexMarketLatestData {
+  indexId: String!
+  indexValue: Float!
+  priorIndexValue: Float!
+  totalTrade: Float!
+  totalQuantity: Float!
+  totalValue: Float!
+  advances: Float!
+  noChanges: Float!
+  declines: Float!
+  floors: Float!
+  change: Float!
+  ratioChange: Float!
+  totalQuantityPt: Float!
+  totalValuePt: Float!
+  allQuantity: Float!
+  allValue: Float!
+  totalQuantityOd: Float!
+  totalValueOd: Float!
+  changePercent: Float!
+  ceilings: Float!
+}
+
+enum IndexMarketInput {
+  HNX30
+  HNX
+  HNXUPCOM
+  VN100
+  VN30
+  VNALL
+  VNCOND
+  VNCONS
+  VNDIAMOND
+  VNENE
+  VNFIN
+  VNFINLEAD
+  VNFINSELECT
+  VNHEAL
+  VNIND
+  VNINDEX
+  VNIT
+  VNMAT
+  VNMID
+  VNREAL
+  VNSI
+  VNSML
+  VNUTI
+  VNX50
+  VNXALL
+}
+
+type RecommendationResponse {
+  id: String!
+  date: String!
+  time: String! @deprecated(reason: "This field is deprecated. Use openDate instead")
+  code: String! @deprecated(reason: "This field is deprecated. Use ticker instead")
+  sector: String
+  exchange: String
+  botPrice: Float! @deprecated(reason: "This field is deprecated. Use openPrice instead")
+  latestPrice: Float
+  type: String
+  status: String
+  quantity: Float! @deprecated(reason: "This field is deprecated")
+  broker: String! @deprecated(reason: "This field is deprecated")
+  product: String! @deprecated(reason: "This field is deprecated")
+  t3: Float! @deprecated(reason: "This field is deprecated")
+  t8: Float! @deprecated(reason: "This field is deprecated")
+  t30: Float! @deprecated(reason: "This field is deprecated")
+  t90: Float! @deprecated(reason: "This field is deprecated")
+  positionClosePrice: Float @deprecated(reason: "This field is deprecated. Use closedPrice instead")
+  profit: Float
+  profitPercent: Float
+  sessionsHoldCount: Int
+  ticker: String
+  openDate: String
+  closedDate: String
+  openPrice: Float
+  closedPrice: Float
+  tpPrice: Float
+  slPrice: Float
+  recType: String
+}
+
+input RecommendationBotInput {
+  symbols: [String!] = null
+  sectors: [String!] = null
+  startDate: Date
+  endDate: Date
+  offset: Int = 0
+  limit: Int = 10
+  type: String = "buy"
+  recommendationType: RecommendationTypeInput! = SHORT_RECOMMENDATION
+  orderBy: RecommendationBotOrderBy
+  exchange: RecommendationFilterByExchange
+}
+
+"""Date (isoformat)"""
+scalar Date
+
+enum RecommendationTypeInput {
+  SHORT_RECOMMENDATION
+  MID_RECOMMENDATION
+  ATC_RECOMMENDATION
+}
+
+input RecommendationBotOrderBy {
+  column: RecommendationBotOrderColumnEnum! = TIME
+  direction: OrderDirectionEnum! = DESC
+}
+
+enum RecommendationBotOrderColumnEnum {
+  TIME
+  PROFIT_PERCENT
+  STATUS
+}
+
+enum OrderDirectionEnum {
+  ASC
+  DESC
+}
+
+enum RecommendationFilterByExchange {
+  UPCOM
+  HOSE
+  HNX
+}
+
+type RecommendationOverviewResponse {
+  date: String!
+  open: Float
+  close: Float
+  high: Float
+  low: Float
+  volume: Float
+  recommendationCount: Int
+}
+
+input RecommendationOverviewInput {
+  recommendationType: RecommendationTypeInput = SHORT_RECOMMENDATION
+  filterByDateRange: RecommendationFilterByDateRange = LAST_WEEK
+  filterByMarketIndex: RecommendationFilterByMarketIndex = VN_INDEX
+}
+
+enum RecommendationFilterByDateRange {
+  LAST_WEEK
+  LAST_MONTH
+  LAST_3_MONTHS
+  LAST_6_MONTHS
+  LAST_1_YEAR
+  LAST_2_YEARS
+}
+
+enum RecommendationFilterByMarketIndex {
+  VN_INDEX
+  HNX
+  UPCOM
+  DATX_INDEX
+}
+
+type DerivativePerformanceResponse {
+  t30: Float @deprecated(reason: "Remove soon")
+  t90: Float @deprecated(reason: "Remove soon")
+}
+
+type DerivativeRecommendationPerformanceResponse {
+  """Mã HĐ"""
+  ticker: String
+
+  """Ngày GD"""
+  date: String
+
+  """Ngày cập nhật"""
+  updatedDate: String
+
+  """Số lệnh"""
+  totalTransaction: Int
+
+  """Số vị thế mở mới"""
+  newOpen: Int
+
+  """PnL (point)"""
+  normedPnlPoint: Float
+}
+
+input DerivativePerformanceInput {
+  """Lọc theo ngày, tuần, tháng"""
+  filterBy: DerivativePerformanceFilterByDateRange = DAY
+
+  """Ngày bắt đầu (YYYY-MM-DD)"""
+  startDate: Date = null
+
+  """Ngày kết thúc (YYYY-MM-DD)"""
+  endDate: Date = null
+
+  """Số lượng bản ghi"""
+  limit: Int = 10
+
+  """Vị trí bản ghi đầu tiên"""
+  offset: Int = 0
+}
+
+enum DerivativePerformanceFilterByDateRange {
+  DAY
+  WEEK
+  MONTH
+}
+
+type StockMutationQueryResponse {
+  type: String!
+  date: String!
+  time: String!
+  symbol: String!
+  exchange: String!
+  currentVol: Float!
+  historyVol: Float!
+  historyVol20: Float!
+  percentage: Float!
+}
+
+enum StockMutationTypeInput {
+  LAST_SESSION
+  LAST_5_SESSION
+  LAST_20_SESSION
+  LAST_20_SESSION_EOD
+  MIN_AVG
+}
+
+enum ExchangeFilterInput {
+  All
+  HOSE
+  HNX
+  UPCOM
+}
+
+type StocksCompanyDataResponse {
+  """Tên công ty"""
+  companyName: String
+
+  """Tên công ty tiếng Anh"""
+  companyNameEn: String
+
+  """Sàn giao dịch"""
+  exchange: String
+
+  """Mã chứng khoán"""
+  ticker: String
+}
+
+input StocksCompanyInput {
+  ticker: String = null
+  exchange: String = null
+}
+
+type MarketStatusResponse {
+  timestamp: Int!
+  cashs: [MarketStatusCashData!]!
+}
+
+type MarketStatusCashData {
+  date: String!
+  cash: Float!
+}
+
+type MarketRecommendationResponse {
+  timestamp: Int!
+  equity: String!
+  cash: String!
+  margin: String!
+  marketSentiment: String!
+  marketSentimentNum: Int!
+  marketSentimentTrend: String!
+  marketSentimentTrendNum: Int!
+  marketSentimentTrendPrev: String!
+  marketSentimentTrendPrevNum: Int!
+  moneyMoverment: String!
+  marketTrend: String!
+  marketRsi: String!
+  globalMarket: String!
+}
+
+type SectorsRatingResponse {
+  timestamp: Int!
+  data: [SectorsRatingData!]!
+}
+
+type SectorsRatingData {
+  sector: String
+  rating: Int
+  sectorVi: String
+  rank: Int
+  gradeRank: Int
+  prevRank: Int
+  totalRank: Int
+}
+
+type StocksRatingResponse {
+  timestamp: Int!
+  data: [StocksRatingData!]!
+}
+
+type StocksRatingData {
+  code: String
+  sector: String
+  rank: Int
+  totalRank: Int
+  gradeRank: Int
+  totalPoints: Float
+  sectorVi: String
+}
+
+type PortfolioPerformanceResponse {
+  """Date"""
+  d: String!
+
+  """Portfolio performance"""
+  perf: Float!
+}
+
+input PortfolioPerformanceInput {
+  """Portfolio ID"""
+  pid: String!
+}
+
+type PortfolioEfficiencyResponse {
+  """Datetime (ISO format)"""
+  d: String!
+
+  """Portfolio Index"""
+  pi: Float!
+
+  """VN Index"""
+  vni: Float!
+
+  """Portfolio Index Change"""
+  pic: Float!
+
+  """VN Index Change"""
+  vnic: Float!
+}
+
+input PortfolioEfficiencyInput {
+  """Portfolio ID"""
+  pid: String!
+
+  """Date range"""
+  dr: PortfolioEfficiencyFilterByDateRange!
+}
+
+enum PortfolioEfficiencyFilterByDateRange {
+  LAST_WEEK
+  LAST_MONTH
+  LAST_3_MONTHS
+  LAST_6_MONTHS
+  LAST_1_YEAR
+}
+
+type PortfolioAllocationResponse {
+  """Assets"""
+  ast: PortfolioAllocationAssetResponse!
+
+  """Allocation"""
+  aloc: [PortfolioAllocationItemResponse!]!
+}
+
+type PortfolioAllocationAssetResponse {
+  """Margin"""
+  mg: Float!
+
+  """Net Worth"""
+  nw: Float!
+
+  """Margin Color"""
+  mgColr: String!
+
+  """Net Worth Color"""
+  nwColr: String!
+}
+
+type PortfolioAllocationItemResponse {
+  """Item (Ticker/Sector/Echange/Other)"""
+  it: String!
+
+  """Proportion"""
+  ppt: Float!
+
+  """Item Translation"""
+  itVi: String!
+
+  """Sub items"""
+  its: [PortfolioAllocationItemResponse!]!
+
+  """Color"""
+  colr: String
+}
+
+input PortfolioAllocationInput {
+  """Portfolio ID"""
+  pid: String!
+
+  """Allocation by"""
+  alocBy: PortfolioAllocationFilter!
+}
+
+enum PortfolioAllocationFilter {
+  BY_TICKER
+  BY_SECTOR
+  BY_EXCHANGE
+}
+
+type PortfolioAllocationBalanceResponse {
+  """Ticker"""
+  t: String!
+
+  """Average price"""
+  ap: Float!
+
+  """Last price"""
+  lp: Float!
+
+  """Profit"""
+  pf: Float!
+
+  """DatX rating"""
+  dxr: Float!
+}
+
+input PortfolioAllocationBalanceInput {
+  """Portfolio ID"""
+  pid: String!
+}
+
+type DerivativesRecommendationResponse {
+  """ID Lệnh - UUID"""
+  id: String
+
+  """Ngày giao dịch"""
+  date: String!
+
+  """Ngày cập nhật"""
+  updatedDate: String
+
+  """Mã HĐ"""
+  ticker: String!
+
+  """Lọai lệnh: buy, sell"""
+  type: String!
+
+  """Vai trò của lệnh: close, open, closeAndOpen"""
+  role: String!
+
+  """Giá khuyến nghị (đóng/ mở vị thế)"""
+  price: Float!
+
+  """Số hợp đồng được mở"""
+  quantity: Int
+
+  """% số hợp  mở (trên tổng số 400 hợp đồng)"""
+  percentage: Int
+
+  """Số hợp đồng tài khoản đang lắm dữ"""
+  holding: Int
+
+  """% số hợp đồng đang lắm dữ (trên tổng số 400 hợp đồng)"""
+  holdingPercentage: Int
+
+  """PnL (point)"""
+  normedPnlPoint: Float
+
+  """Chi tiết PnL"""
+  pnlDetail: [DerivativesRecommendationPnlDetailResponse!]
+}
+
+type DerivativesRecommendationPnlDetailResponse {
+  """ID Lệnh - UUID"""
+  id: String
+
+  """Ngày giao dịch"""
+  date: String!
+
+  """Ngày cập nhật"""
+  updatedDate: String
+
+  """Lọai lệnh: buy, sell"""
+  type: String!
+
+  """Vai trò của lệnh: close, open, closeAndOpen"""
+  role: String!
+
+  """Giá khuyến nghị (đóng/ mở vị thế)"""
+  price: Float!
+
+  """Số hợp đồng được mở"""
+  quantity: Float!
+
+  """% số hợp  mở (trên tổng số 400 hợp đồng)"""
+  percentage: Float!
+
+  """Số hợp đồng tài khoản đang lắm dữ"""
+  holding: Float!
+
+  """% số hợp đồng đang lắm dữ (trên tổng số 400 hợp đồng)"""
+  holdingPercentage: Float!
+}
+
+input DerivativesRecommendationInput {
+  tickers: [String!] = null
+  startDate: DateTime = null
+  endDate: DateTime = null
+  offset: Int = null
+  limit: Int = null
+  filterByTicker: DerivativesRecommendationFilterByMarketIndex = null
+}
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+enum DerivativesRecommendationFilterByMarketIndex {
+  VN30F1M
+  VN30F2M
+}
+
+type DerivativesRecommendationOverviewResponse {
+  date: String!
+  close: Float
+  recCount: Int
+}
+
+input DerivativesRecommendationOverviewInput {
+  filterByDateRange: DerivativesRecommendationFilterByDateRange = LAST_WEEK
+  filterByTicker: String
+}
+
+enum DerivativesRecommendationFilterByDateRange {
+  TODAY
+  LAST_WEEK
+  LAST_MONTH
+  LAST_1_YEAR
+}
+
+type DerivativeTickerDataResponse {
+  """HD ID"""
+  ticker: String
+
+  """HD Code"""
+  derivativeCode: String
+
+  """Sàn giao dịch"""
+  exchange: String
+}
+
+input DerivativeTickerInput {
+  ticker: String = null
+}
+
+type Subscription {
+  demoTopic: DemoKafka!
+  marketQuoteTopic(symbols: [String!]!): MarketQuoteResponse!
+  stockPrice(symbols: [String!]!): StockPriceResponse!
+  stockDetail(symbol: String!): StockDetailResponse!
+  stockOverview(symbol: String!, distance: Int!): StockOverviewResponse!
+  stockDatxRating(symbol: String!, distance: Int!): StockDatxRatingResponse!
+  sectorDetail(sector: String!): SectorResponse!
+  sectorOverview(sector: String!, distance: Int!): SectorOverviewResponse!
+  sectorDatxRating(sector: String!): SectorDatxRatingResponse!
+  sectorsRating: SectorsRatingResponse!
+  marketStatus(distance: Int!): MarketStatusResponse!
+  marketRecommendation: MarketRecommendationResponse!
+  stocksRating: StocksRatingResponse!
+  indexMarketLatest(indexId: IndexMarketInput!): IndexMarkeLatestResponse!
+  recommendationBotLatest(type: String = "buy", recommendationType: RecommendationTypeInput = SHORT_RECOMMENDATION): RecommendationResponse!
+  stocksMutation(type: StockMutationSubscriptionTypeInput! = LAST_5_SESSION): StockMutationSubscriptionResponse!
+  notifyMessage: NotifyMessageResponse!
+  getDerivativeOrders: DerivativeOrderResponse!
+  portfolioNotify(input: PortfolioNotifyInput!): PortfolioNotifyResponse!
+  mi(indices: [IndexMarketInput!]!): MarketIndexResponse!
+  derivativesRecommendationLatest: DerivativesRecommendationResponse!
+}
+
+type DemoKafka {
+  topic: String!
+  message: String!
+}
+
+type MarketQuoteResponse {
+  tradingDate: String!
+  time: String!
+  exchange: String!
+  symbol: String!
+  rType: String!
+  askPrice1: Int!
+  askPrice2: Int!
+  askPrice3: Int!
+  askPrice4: Int!
+  askPrice5: Int!
+  askPrice6: Int!
+  askPrice7: Int!
+  askPrice8: Int!
+  askPrice9: Int!
+  askPrice10: Int!
+  askVol1: Int!
+  askVol2: Int!
+  askVol3: Int!
+  askVol4: Int!
+  askVol5: Int!
+  askVol6: Int!
+  askVol7: Int!
+  askVol8: Int!
+  askVol9: Int!
+  askVol10: Int!
+  bidPrice1: Int!
+  bidPrice2: Int!
+  bidPrice3: Int!
+  bidPrice4: Int!
+  bidPrice5: Int!
+  bidPrice6: Int!
+  bidPrice7: Int!
+  bidPrice8: Int!
+  bidPrice9: Int!
+  bidPrice10: Int!
+  bidVol1: Int!
+  bidVol2: Int!
+  bidVol3: Int!
+  bidVol4: Int!
+  bidVol5: Int!
+  bidVol6: Int!
+  bidVol7: Int!
+  bidVol8: Int!
+  bidVol9: Int!
+  bidVol10: Int!
+  tradingSession: String!
+}
+
+type StockPriceResponse {
+  rType: String!
+  tradingDate: String!
+  time: String!
+  isin: String!
+  symbol: String!
+  ceiling: Float!
+  floor: Float!
+  refPrice: Float!
+  open: Float!
+  high: Float!
+  low: Float!
+  close: Float!
+  avgPrice: Float!
+  priorVal: Float!
+  lastPrice: Float!
+  lastVol: Float!
+  totalVal: Float!
+  totalVol: Float!
+  bidPrice1: Float!
+  bidPrice2: Float!
+  bidPrice3: Float!
+  bidPrice4: Float!
+  bidPrice5: Float!
+  bidPrice6: Float!
+  bidPrice7: Float!
+  bidPrice8: Float!
+  bidPrice9: Float!
+  bidPrice10: Float!
+  bidVol1: Float!
+  bidVol2: Float!
+  bidVol3: Float!
+  bidVol4: Float!
+  bidVol5: Float!
+  bidVol6: Float!
+  bidVol7: Float!
+  bidVol8: Float!
+  bidVol9: Float!
+  bidVol10: Float!
+  askPrice1: Float!
+  askPrice2: Float!
+  askPrice3: Float!
+  askPrice4: Float!
+  askPrice5: Float!
+  askPrice6: Float!
+  askPrice7: Float!
+  askPrice8: Float!
+  askPrice9: Float!
+  askPrice10: Float!
+  askVol1: Float!
+  askVol2: Float!
+  askVol3: Float!
+  askVol4: Float!
+  askVol5: Float!
+  askVol6: Float!
+  askVol7: Float!
+  askVol8: Float!
+  askVol9: Float!
+  askVol10: Float!
+  marketId: String!
+  exchange: String!
+  tradingSession: String!
+  tradingStatus: String!
+  change: Float!
+  ratioChange: Float!
+  estMatchedPrice: Float!
+}
+
+type StockDetailResponse {
+  timestamp: Int!
+  code: String!
+  overall: StockOverall!
+  transaction: StockTransaction!
+  baseIndex: StockBaseIndex!
+}
+
+type StockOverall {
+  lastPrice: Float!
+  movPrice: Float!
+  movPercent: Float!
+}
+
+type StockTransaction {
+  dayVol: StockTransactionDayVol!
+  v52wVol: StockTransactionV52wVol!
+}
+
+type StockTransactionDayVol {
+  lowest: Float!
+  highest: Float!
+  current: Float!
+}
+
+type StockTransactionV52wVol {
+  lowest: Float!
+  highest: Float!
+  current: Float!
+}
+
+type StockBaseIndex {
+  pe: Float!
+  beta: Float!
+  totalValue: Float!
+  totalKl: Float!
+  averageVolume: Float!
+  slcp: Float!
+  cap: Float!
+}
+
+type StockOverviewResponse {
+  timestamp: Int!
+  code: String!
+  data: [StockOverviewData!]!
+}
+
+type StockOverviewData {
+  sectorVal: Float!
+  price: Float!
+  date: String!
+}
+
+type StockDatxRatingResponse {
+  timestamp: Int!
+  code: String!
+  ratingData: StockDatxRatingData!
+  pointData: [StockDatxPointData!]!
+}
+
+type StockDatxRatingData {
+  datxPoint: Float!
+  sectorName: String!
+  sectorRank: Int!
+  totalSectorRank: Int!
+  stockRank: Int!
+  totalStockRank: Int!
+  media: Float!
+  finance: String!
+  rs52w: String!
+}
+
+type StockDatxPointData {
+  date: String!
+  totalPoints: Float!
+}
+
+type SectorResponse {
+  timestamp: Int!
+  code: String!
+  baseIndex: SectorBaseIndex!
+  financeIndex: SectorFinanceIndex!
+}
+
+type SectorBaseIndex {
+  beta: Float!
+  pe: Float!
+  totalValue: Float!
+  marketCap: Float!
+}
+
+type SectorFinanceIndex {
+  pb: Float!
+  eps: Float!
+  peg: Float!
+  roe: Float!
+  roa: Float!
+}
+
+type SectorOverviewResponse {
+  timestamp: Int!
+  code: String!
+  data: [SectorOverviewData!]!
+}
+
+type SectorOverviewData {
+  date: String!
+  volume: Float!
+  index: Float!
+}
+
+type SectorDatxRatingResponse {
+  timestamp: Int!
+  code: String!
+  datxPoint: Float!
+  sectorRank: Int!
+  ratingTrend: Int!
+}
+
+type IndexMarkeLatestResponse {
+  date: String!
+  indexId: String!
+  indexValue: Float!
+  priorIndexValue: Float!
+  totalTrade: Float!
+  totalQuantity: Float!
+  totalValue: Float!
+  advances: Float!
+  noChanges: Float!
+  declines: Float!
+  floors: Float!
+  change: Float!
+  ratioChange: Float!
+  totalQuantityPt: Float!
+  totalValuePt: Float!
+  allQuantity: Float!
+  allValue: Float!
+  totalQuantityOd: Float!
+  totalValueOd: Float!
+  changePercent: Float!
+  ceilings: Float!
+}
+
+type StockMutationSubscriptionResponse {
+  type: String!
+  date: String!
+  time: String!
+  symbol: String!
+  exchange: String!
+  currentVol: Float!
+  historyVol: Float!
+  historyVol20: Float!
+  percentage: Float!
+}
+
+enum StockMutationSubscriptionTypeInput {
+  LAST_SESSION
+  LAST_5_SESSION
+  LAST_20_SESSION
+  LAST_20_SESSION_EOD
+  MIN_AVG
+}
+
+type NotifyMessageResponse {
+  Id: String!
+  type: String!
+  title: String!
+  messages: String!
+  metadata: String!
+  isMark: String!
+  timeAgo: String!
+  createdAt: String!
+}
+
+type DerivativeOrderResponse {
+  timestamp: Int!
+  data: [DerivativeOrderDto!]!
+}
+
+type DerivativeOrderDto {
+  Time: String
+  Code: String
+}
+
+type PortfolioNotifyResponse {
+  timestamp: Int!
+  updated: Boolean!
+}
+
+input PortfolioNotifyInput {
+  """Portfolio ID"""
+  pid: String!
+}
+
+type MarketIndexResponse {
+  """Date"""
+  d: String!
+
+  """Index ID"""
+  iid: String!
+
+  """Index value"""
+  iv: Float!
+
+  """Prior index value"""
+  piv: Float!
+
+  """Total trade"""
+  tt: Float!
+
+  """Total quantity"""
+  tq: Float!
+
+  """Total value"""
+  tv: Float!
+
+  """Advances"""
+  adv: Float!
+
+  """No changes"""
+  nc: Float!
+
+  """Declines"""
+  dec: Float!
+
+  """Floors"""
+  fl: Float!
+
+  """Change"""
+  chg: Float!
+
+  """Ratio change"""
+  rc: Float!
+
+  """Total quantity PT"""
+  tqpt: Float!
+
+  """Total value PT"""
+  tvpt: Float!
+
+  """All quantity"""
+  aq: Float!
+
+  """All value"""
+  av: Float!
+
+  """Total quantity OD"""
+  tqod: Float!
+
+  """Total value OD"""
+  tvod: Float!
+
+  """Change percent"""
+  cp: Float!
+
+  """Ceilings"""
+  ceil: Float!
+
+  """Trading Session"""
+  tds: String!
+}
